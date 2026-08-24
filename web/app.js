@@ -51,7 +51,7 @@ function renderLogin(message = '') {
   $app.innerHTML = `
     <div class="login-wrap">
       <div class="login-card">
-        <div class="login-brand"><img src="/assets/icon.svg" alt="" /><span><strong>TFast</strong><small>Ads Manager</small></span></div>
+        <div class="login-brand"><span><strong>TFast</strong><small>Ads Manager</small></span></div>
         <div class="login-heading"><h1>Agency Command Center</h1><p>Sign in to monitor performance, investigate accounts, and approve guarded actions.</p></div>
         ${message ? `<div class="banner error" role="alert">${esc(message)}</div>` : ''}
         <form class="login-form" onsubmit="event.preventDefault(); doLogin()">
@@ -101,7 +101,7 @@ function shell(active, inner) {
   ];
   $app.innerHTML = `<div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
-      <button class="brand" onclick="showCommandCenter()" aria-label="Open command center"><img src="/assets/icon.svg" alt="" /><span><span class="brand-word">T<span>Fast</span></span><small>Ads Manager</small></span></button>
+      <button class="brand" onclick="showCommandCenter()" aria-label="Open command center"><span><span class="brand-word">T<span>Fast</span></span><small>Ads Manager</small></span></button>
       <nav>${tabs.map(([id, label]) => `<button class="${active === id ? 'active' : ''}" onclick="nav('${id}')">${icon(id)}<span>${label}</span></button>`).join('')}</nav>
       <div class="sidebar-foot"><div class="agency-avatar">TD</div><div><strong>TFast Digital</strong><span>Agency workspace</span></div></div>
     </aside><button class="sidebar-scrim" aria-label="Close navigation" onclick="toggleSidebar()"></button>

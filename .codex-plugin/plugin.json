@@ -59,8 +59,6 @@
       "Run a TikTok creative fatigue detection pass.",
       "Which clients need my attention today?"
     ],
-    "brandColor": "#1F3A8A",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/logo-light.png"
+    "brandColor": "#1F3A8A"
   }
 }

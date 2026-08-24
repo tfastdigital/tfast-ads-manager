@@ -39,7 +39,7 @@ Preserve the TFast Ads Manager name and the supplied TFast logo assets. Product 
 
 - Product architecture and safety model in `docs/`.
 - Existing live dashboard capabilities in `web/` and `server/src/routes.ts`.
-- Brand assets in `assets/logo-light.png`, `assets/logo-dark.png`, and `assets/icon.svg`.
+- Brand identity: TFast wordmark rendered in the UI; no third-party logo assets.
 - Seeded sample performance data exists for development demonstrations; it must not be presented as a real customer claim.
 
 ## Product Principles

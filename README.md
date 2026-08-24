@@ -1,10 +1,6 @@
 # TFast Ads Manager
 
 <p align="center">
-  <img src="assets/logo-light.png" alt="TFast Ads Manager by TFast Digital Agency" width="360">
-</p>
-
-<p align="center">
   <strong>AI-powered advertising command center for agencies and performance marketers.</strong><br>
   Built by <a href="https://tfastdigital.com/"><strong>TFast Digital Agency</strong></a>.
 </p>
@@ -203,7 +199,6 @@ npm run verify:ai
 ## Repository layout
 
 ```text
-assets/       Brand assets
 commands/     Advertising workflow commands
 docs/         Architecture, database and security documentation
 hooks/        Agent/session integration hooks

@@ -7,7 +7,6 @@
     "tfast-ads-manager": "bin/install.mjs"
   },
   "files": [
-    "assets/",
     "bin/",
     ".claude-plugin/",
     ".codex-plugin/",
