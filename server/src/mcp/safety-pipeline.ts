@@ -1,5 +1,5 @@
 /**
- * Shared safety pipeline (§13–15, §26) — platform-agnostic.
+ * Shared safety pipeline — platform-agnostic.
  * Every write-capable advertising operation on ANY platform flows through:
  *   dry-run → approval → budget governor → execute → audit
  * Platform adapters (tiktok / meta / google) resolve context and provide
@@ -27,7 +27,7 @@ export interface SafetyPipelineRequest {
   account_external_id: string;
   permissions: string[];
   operation: string;                 // platform operation, e.g. "campaign.update"
-  actionType: string;                // automation_policies action_type (§13)
+  actionType: string;                // automation_policies action_type
   params: Record<string, unknown>;
   beforeState: Record<string, unknown>;
   budget: {
@@ -126,7 +126,7 @@ export async function runSafetyPipeline(req: SafetyPipelineRequest): Promise<Mut
 
   const idempotencyKey = req.idempotencyKey ?? crypto.randomUUID();
 
-  // ── Persist decision trail (§26) ──
+  // ── Persist decision trail ──
   const { rows } = await pool.query<{ id: string }>(
     `INSERT INTO tool_calls (agency_id, client_id, ad_account_id, tool, mode, proposed_parameters,
                              policy_result, approval_status, before_state, after_state, idempotency_key)

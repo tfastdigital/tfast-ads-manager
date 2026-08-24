@@ -1,4 +1,4 @@
--- 002_ads.sql — Advertising objects, creatives, performance (§10, §11)
+-- 002_ads.sql — Advertising objects, creatives, performance
 -- PostgreSQL dialect (run with psql / pg driver, not SQL Server).
 
 -- ── Campaigns ─────────────────────────────────────────────
@@ -86,7 +86,7 @@ CREATE TABLE creative_variants (
   created_at  timestamptz NOT NULL DEFAULT now()
 );
 
--- ── Creative Intelligence Memory (§11) ────────────────────
+-- ── Creative Intelligence Memory ──────────────────────────
 -- Structured characteristics — not files — joined with performance
 -- to discover which attributes correlate with results.
 CREATE TABLE creative_attributes (

@@ -1,6 +1,6 @@
 /**
  * Policy service — reads automation_policies, budget_limits and
- * emergency_stops for the deterministic safety pipeline (§13, §14).
+ * emergency_stops for the deterministic safety pipeline.
  * Defaults are conservative: unknown action type ⇒ approval; unknown
  * budget cap ⇒ 0% auto-scale (everything requires approval).
  */

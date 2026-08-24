@@ -1,7 +1,7 @@
 /**
- * Single-process verification for Phase 6 (experiments, creative
- * intelligence) + Phase 7 (leads, attribution, profit).
- * Run: npx tsx scripts/verify-phase67.ts  (server must NOT be running —
+ * Single-process verification for experiments, creative intelligence,
+ * leads, attribution, and profit.
+ * Run: npx tsx scripts/verify-business.ts  (server must NOT be running —
  * PGlite is single-process in dev mode).
  */
 import { pool } from '../src/db/pool.js';
@@ -42,7 +42,7 @@ async function main(): Promise<void> {
     );
   }
 
-  // ── Phase 6a: experiment engine ─────────────────────────
+  // ── Experiment engine ──────────────────────────────────
   // Variant ads with ad-level snapshot performance
   for (const [ext, spend, rev, conv, daysAgo] of [
     ['hookA', 200, 900, 20, 1], ['hookA', 200, 900, 20, 2], ['hookA', 200, 900, 20, 3],
@@ -74,7 +74,7 @@ async function main(): Promise<void> {
   const evalResult = await evaluateExperiment(scope, exp.experiment_id);
   console.log('EXPERIMENT:', JSON.stringify({ id: evalResult.experiment_id, winner: evalResult.winner, lesson_id: evalResult.lesson_id }));
 
-  // ── Phase 6b: creative attribute correlation ────────────
+  // ── Creative attribute correlation ────────────────────
   for (const [ext, hookType, cta] of [['hookA', 'contrarian', 'book_now'], ['hookB', 'curiosity', 'learn_more']] as const) {
     const cr = await pool.query<{ id: string }>(
       `INSERT INTO creatives (agency_id, client_id, platform, external_id, media_type)
@@ -92,7 +92,7 @@ async function main(): Promise<void> {
   const hooks = await topHooks(scope, 7);
   console.log('TOP HOOKS:', JSON.stringify(hooks));
 
-  // ── Phase 7: the §19 scenario (B higher CPL, far more qualified) ──
+  // ── The B-campaign scenario (higher CPL, far more qualified leads) ──
   // Campaign A: 25 leads, few qualified. Campaign B: 10 leads, mostly qualified.
   await pool.query(
     `INSERT INTO performance_snapshots
@@ -124,7 +124,7 @@ async function main(): Promise<void> {
   console.log('PROFIT:', JSON.stringify(profit.map((r) => ({ name: r.campaign_name, revenue: r.revenue, ad_spend: r.ad_spend, contribution_profit: +r.contribution_profit.toFixed(2) }))));
 
   await pool.end();
-  console.log('PHASE 6+7 VERIFICATION COMPLETE');
+  console.log('BUSINESS VERIFICATION COMPLETE');
 }
 
 main().catch((err) => {

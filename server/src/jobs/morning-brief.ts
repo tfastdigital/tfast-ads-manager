@@ -1,5 +1,5 @@
 /**
- * TFast Morning Brief (§18) — automated agency review workflow.
+ * TFast Morning Brief — automated agency review workflow.
  * Windows: 1 / 3 / 7 / 14 / 30 days. Deterministic detectors rank findings
  * by severity; optional LLM narrative adds recommendations when providers
  * are reachable. Persists every run to automation_runs.
@@ -67,7 +67,7 @@ export async function runMorningBrief(scope: TenantScope, input: BriefInput = {}
       findings.push(...detectChanges(curr, prior, w, { targetRoas, targetCpa, dailyCap }));
     }
 
-    // Pending approvals (§13)
+    // Pending approvals
     const { rows: approvRows } = await pool.query<{ action_type: string }>(
       `SELECT action_type FROM approvals WHERE agency_id = $1 AND client_id = $2 AND status = 'pending'`,
       [scope.agency_id, clientId],

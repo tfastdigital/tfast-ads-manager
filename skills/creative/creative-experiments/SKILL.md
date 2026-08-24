@@ -4,7 +4,7 @@ description: "Design and run creative experiments through the TFast experiment e
 ---
 # TFast Creative Experiments
 
-Structure creative testing through the TFast experiment engine (§12).
+Structure creative testing through the TFast experiment engine.
 
 ## The chain (every hop persisted)
 

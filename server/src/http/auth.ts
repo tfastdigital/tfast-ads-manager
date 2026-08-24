@@ -1,7 +1,7 @@
 /**
  * Auth — minimal JWT (HS256, hand-rolled, zero deps) + RBAC.
  * Session resolution is server-side; tenant values NEVER come from
- * client input (SECURITY_MODEL §2).
+ * client input.
  */
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';

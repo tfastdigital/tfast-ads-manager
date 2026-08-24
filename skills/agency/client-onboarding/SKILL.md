@@ -11,7 +11,7 @@ Onboard a client end-to-end. The TFast platform API is the system of record.
 ### 1. Create the client
 `POST /api/v1/clients` — name, slug, timezone. Roles: admin+.
 
-### 2. Build the Client Brain (§4)
+### 2. Build the Client Brain
 Fill every section via `PUT /api/v1/clients/{id}/brain/{section}`. Interview the client before writing — do not invent data.
 
 | Section | Minimum contents |
@@ -26,10 +26,10 @@ Fill every section via `PUT /api/v1/clients/{id}/brain/{section}`. Interview the
 
 Anything unknown → ask the user. An empty economics section breaks the Budget Governor and the Commander's status classification (they default to ROAS 3 / no CPA target).
 
-### 3. Register connections (§9)
+### 3. Register connections
 `POST /api/v1/clients/{id}/connections` per platform: provider, external_account_id, advertiser_id (TikTok), credential_reference (a server-side secret-store pointer — never the secret itself), permissions (e.g. `["tiktok:read","tiktok:write"]`).
 
-### 4. Install default automation policies (§13)
+### 4. Install default automation policies
 Confirm the client accepts the default set (already seeded for new clients by the platform):
 
 | Action | Mode |

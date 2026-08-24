@@ -1,5 +1,5 @@
 /**
- * Audit Logger (§26) — append-only evidence chain.
+ * Audit Logger — append-only evidence chain.
  * Every AI action records the full decision surface so a human can ask:
  *   "Why did TFast AI pause this advertisement?"
  * and receive an evidence-based answer.

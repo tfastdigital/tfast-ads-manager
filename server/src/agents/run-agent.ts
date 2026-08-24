@@ -1,7 +1,7 @@
 /**
  * Agent runner — executes a registered specialist agent.
  * Structured outputs only: every response is parsed against the agent's
- * zod output schema (dev rule 6) and recorded in agent_runs.
+ * zod output schema and recorded in agent_runs.
  */
 import { z } from 'zod';
 import { getAgent } from './registry.js';

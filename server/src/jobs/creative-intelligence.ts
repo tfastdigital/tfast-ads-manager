@@ -1,5 +1,5 @@
 /**
- * Creative Intelligence (Phase 6, §11) — structured creative memory.
+ * Creative Intelligence — structured creative memory.
  * Extracts creative attributes (hook, hook_type, format, emotions, offer,
  * CTA …) via multimodal analysis, stores them in creative_attributes, and
  * correlates attributes with performance to discover which creative
@@ -29,7 +29,7 @@ export interface AttributeCorrelationRow {
   conversions: number;
 }
 
-/** Extract + store attributes for one creative (§11). */
+/** Extract + store attributes for one creative. */
 export async function extractCreativeAttributes(
   scope: TenantScope,
   input: z.infer<typeof CreativeAnalyzeInputSchema>,
@@ -111,7 +111,7 @@ export async function analyzeCreativeBatch(
 }
 
 /**
- * Correlation (§11) — join creative attributes with ad-level performance
+ * Correlation — join creative attributes with ad-level performance
  * to find which characteristics correlate with strong results.
  */
 export async function correlateCreativeAttributes(scope: TenantScope, days = 30): Promise<AttributeCorrelationRow[]> {

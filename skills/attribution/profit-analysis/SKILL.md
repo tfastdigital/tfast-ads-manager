@@ -4,7 +4,7 @@ description: "Optimize toward contribution profit — revenue minus COGS, fees, 
 ---
 # TFast Profit Analysis
 
-The final optimization objective (§20): contribution profit, not revenue, not even ROAS.
+The final optimization objective: contribution profit, not revenue, not even ROAS.
 
 ## The formula
 
@@ -36,7 +36,7 @@ TFast computes it per campaign: `GET /api/v1/clients/{id}/profit?days=30` (purch
 | Strong contribution on one campaign | Double down there, not on raw-ROAS winners |
 | Contribution declining while ROAS stable | Cost-side creep (shipping, fees) — fix ops, not ads |
 
-## Client objectives (§20)
+## Client objectives
 
 The client chooses the objective: Leads → Qualified Leads → Bookings → Purchases → Revenue → ROAS → Contribution Profit. Store it in the `economics` brain section (`optimization_objective`). Every recommendation must evaluate against THAT objective — a ROAS recommendation for a contribution-profit client is wrong by construction.
 

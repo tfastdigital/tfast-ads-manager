@@ -1,5 +1,5 @@
 /**
- * Memory service — pgvector semantic memory (§10, §21).
+ * Memory service — pgvector semantic memory.
  * Two strictly separated levels:
  *   CLIENT MEMORY   (client_id set, confidential, never cross-client)
  *   AGENCY KNOWLEDGE (client_id NULL, anonymized patterns only)
@@ -50,7 +50,7 @@ export async function recall(scope: TenantScope, queryText: string, k = 5) {
 }
 
 /**
- * Promote a lesson into AGENCY KNOWLEDGE (§21).
+ * Promote a lesson into AGENCY KNOWLEDGE.
  * HARD RULE: anonymized_content must be explicitly provided and flagged.
  * Never auto-promote client rows — confidential creatives, financials,
  * audiences, strategies and customer data must not leak cross-client.

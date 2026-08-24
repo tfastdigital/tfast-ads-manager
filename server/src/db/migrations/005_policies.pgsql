@@ -1,4 +1,4 @@
--- 005_policies.sql — Automation modes, budget limits, emergency stops (§13, §14)
+-- 005_policies.sql — Automation modes, budget limits, emergency stops
 -- PostgreSQL dialect (run with psql / pg driver, not SQL Server).
 
 -- ── Automation policies: per client, per action type ──────
@@ -16,7 +16,7 @@ CREATE TABLE automation_policies (
   UNIQUE (client_id, action_type)
 );
 
--- Seed the §13 example policy set for new clients (copy in app code).
+-- Seed the example policy set for new clients (copy in app code).
 -- INSERT INTO automation_policies (agency_id, client_id, action_type, mode, min_approval_role) VALUES
 --   (?, ?, 'pause_underperforming_ad',    'autopilot',      'media_buyer'),
 --   (?, ?, 'scale_budget_under_15_percent','autopilot',      'media_buyer'),

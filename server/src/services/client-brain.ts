@@ -1,5 +1,5 @@
 /**
- * Client Brain service (§4).
+ * Client Brain service.
  * Sections: business, brand, customers, economics, advertising_history,
  * competitors, ai_knowledge. Versioned updates; auto-loaded before any
  * recommendation or decision for the client.

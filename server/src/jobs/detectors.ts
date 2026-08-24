@@ -1,5 +1,5 @@
 /**
- * Deterministic detectors (Phase 5) — pure functions over snapshot
+ * Deterministic detectors — pure functions over snapshot
  * aggregates. No LLM in the loop: these produce the severity-ranked
  * findings that feed the Morning Brief and automation rules.
  */

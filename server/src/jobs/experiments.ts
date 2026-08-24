@@ -1,5 +1,5 @@
 /**
- * Experiment Engine (§12).
+ * Experiment Engine.
  *   Observation → Diagnosis → Hypothesis → Experiment → Result → Lesson → Memory
  * Every hop is a persisted row with FKs; evaluation is deterministic
  * (variant metrics from snapshots), and successful lessons are promoted
@@ -144,7 +144,7 @@ export async function evaluateExperiment(scope: TenantScope, experimentId: strin
     [experimentId, JSON.stringify(result)],
   );
 
-  // Lesson → memory (§12)
+  // Lesson → memory
   let lessonId: string | null = null;
   const lessonContent = winner
     ? `Experiment "${exp.title}": variant "${winner}" won — ROAS ${results.find((r) => r.name === winner)?.roas.toFixed(2)} ` +

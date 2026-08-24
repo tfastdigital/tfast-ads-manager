@@ -1,4 +1,4 @@
--- 004_business.sql — CRM, revenue, attribution, profit (§19, §20)
+-- 004_business.sql — CRM, revenue, attribution, profit
 -- PostgreSQL dialect (run with psql / pg driver, not SQL Server).
 
 -- ── Leads (staged journey) ────────────────────────────────

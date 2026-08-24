@@ -1,5 +1,5 @@
 /**
- * Business Outcomes (Phase 7, §19–20).
+ * Business Outcomes.
  * Leads (staged journey), revenue events, campaign attribution quality
  * (the "Campaign B with higher CPL but 7× qualified" analysis) and
  * contribution profit. Never optimize against platform conversions alone.
@@ -133,7 +133,7 @@ export async function ingestRevenue(scope: TenantScope, input: z.infer<typeof Re
 }
 
 /**
- * Attribution quality report (§19) — the campaign-level table that lets
+ * Attribution quality report — the campaign-level table that lets
  * the AI recognize "higher CPL but far more qualified leads" as value.
  */
 export interface CampaignAttributionRow {
@@ -193,7 +193,7 @@ export async function attributionReport(scope: TenantScope, days = 30): Promise<
   });
 }
 
-/** Contribution profit per campaign (§20). */
+/** Contribution profit per campaign. */
 export interface ProfitRow {
   campaign_id: string;
   campaign_name: string;

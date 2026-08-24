@@ -1,5 +1,5 @@
 /**
- * Google Ads gateway adapter (Phase 8, §28).
+ * Google Ads gateway adapter.
  * Same safety pipeline as TikTok/Meta. MCP endpoint: GOOGLE_MCP_URL.
  * GAQL queries flow through report ops.
  */

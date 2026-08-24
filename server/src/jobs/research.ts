@@ -1,5 +1,5 @@
 /**
- * Research pipeline (Phase 4) — API Direct → research_items (embedded) →
+ * Research pipeline — API Direct → research_items (embedded) →
  * DeepSeek classification → market_insights.
  * Everything is scoped to the client; embeddings land in pgvector for
  * semantic recall by the Market Intelligence Agent.

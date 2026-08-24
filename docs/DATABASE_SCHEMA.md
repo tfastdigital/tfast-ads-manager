@@ -64,7 +64,7 @@ PostgreSQL + pgvector. Migrations live in `server/src/db/migrations/` (`.pgsql` 
 ### client_members
 | agency_id, client_id, user_id, role | — | per-client roles override agency role |
 
-### connections (Connection Registry — §9)
+### connections (Connection Registry)
 | Column | Type | Notes |
 |---|---|---|
 | id | uuid PK | |
@@ -102,7 +102,7 @@ Common shape per entity:
 - `creatives`: id, agency_id, client_id, platform, external_id, media_type (video/image/carousel), asset_url, duration_seconds, spark_organic (bool), created_at
 - `creative_variants`: id, creative_id, variant_label, asset_url, attributes jsonb
 
-### creative_attributes (§11 — Creative Intelligence Memory)
+### creative_attributes (Creative Intelligence Memory)
 | Column | Type |
 |---|---|
 | creative_id | uuid FK |
@@ -149,12 +149,12 @@ agency_id, client_id, platform, external_id, event_name, event_time, value, curr
 
 ## 003 — AI Memory & Governance
 
-### client_brains (§4 — Client Brain)
+### client_brains (Client Brain)
 `id, agency_id, client_id, section, content jsonb, version, updated_by, updated_at`
 
 Sections: `business, brand, customers, economics, advertising_history, competitors, ai_knowledge`. Loaded automatically before any recommendation/decision for that client.
 
-### memories (client + agency memory — §21)
+### memories (client + agency memory)
 | Column | Type | Notes |
 |---|---|---|
 | agency_id | uuid | |
@@ -166,29 +166,29 @@ Sections: `business, brand, customers, economics, advertising_history, competito
 | importance | smallint | 1–10 |
 | is_anonymized | bool | required true for agency-scope entries derived from client data |
 
-### agency_knowledge (§21)
+### agency_knowledge
 `id, agency_id, topic, pattern jsonb (generalized), evidence jsonb (anonymized, no client identifiers), embedding vector(1536), confidence numeric, created_at`
 
-### observations / hypotheses / experiments / lessons (§12)
+### observations / hypotheses / experiments / lessons
 - `observations`: client, entity refs, metric, delta, window
 - `hypotheses`: observation_id FK, statement, rationale
 - `experiments`: hypothesis_id FK, design jsonb (variants, success criteria), status (planned/running/completed), start/end, result jsonb
 - `lessons`: experiment_id FK, content, confidence, promoted_to_memory bool
 
-### competitors / research_items / market_insights (§8, API Direct)
+### competitors / research_items / market_insights (API Direct)
 - `competitors`: name, website, socials jsonb, notes
 - `research_items`: source (apidirect), platform (tiktok/instagram/reddit/youtube/x/linkedin/web/forum), kind (competitor/viral/trend/complaint/question/language/offer/influencer/format/sentiment), content jsonb, embedding vector(1536), collected_at
 - `market_insights`: client_id, research_item_id NULL, insight text, category, confidence
 
-### agent_runs / agent_decisions / tool_calls (§26)
+### agent_runs / agent_decisions / tool_calls
 - `agent_runs`: agent, model, input jsonb, output jsonb, status, token_usage jsonb, timestamps
 - `agent_decisions`: agent_run_id FK, decision, reason, confidence, alternatives jsonb
 - `tool_calls`: agent_run_id, tool, proposed_parameters jsonb, mode (dry_run/execute), policy_result jsonb, approval_status, execution_result jsonb, before_state jsonb, after_state jsonb, idempotency_key, created_at
 
-### approvals (§13)
+### approvals
 `id, agency_id, client_id, tool_call_id FK, action_type, requested_by, status (pending/approved/rejected/expired), required_role, decided_by, decided_at, reason`
 
-### audit_logs (§26 — the complete immutable record)
+### audit_logs (the complete immutable record)
 ```
 agent, model, agency_id, client_id, account_id, campaign_id,
 input jsonb, reason text, decision text, tool text,
@@ -199,7 +199,7 @@ Answers: *"Why did TFast AI pause this advertisement?"*
 
 ---
 
-## 004 — Business Outcomes (§19, §20)
+## 004 — Business Outcomes
 
 ### leads
 `id, agency_id, client_id, external_id, source (campaign/ad/platform), contact jsonb, stage (lead → qualified_lead → appointment → show → customer), created_at, qualified_at, converted_at`
@@ -217,18 +217,18 @@ Answers: *"Why did TFast AI pause this advertisement?"*
 `id, agency_id, client_id, source (crm/ecommerce/booking/payments), external_id, type (purchase/refund), amount, currency, fee jsonb, occurred_at, customer_id`
 
 ### attribution
-`id, event_id (conversion or revenue), campaign_id, ad_id, platform, model (last_click/view_through/first_touch), credit numeric` — enables "Campaign B with 2× CPL but 7× qualified leads" reasoning (§19) and contribution profit (§20).
+`id, event_id (conversion or revenue), campaign_id, ad_id, platform, model (last_click/view_through/first_touch), credit numeric` — enables "Campaign B with 2× CPL but 7× qualified leads" reasoning and contribution profit.
 
 ---
 
-## 005 — Policies & Budgets (§13, §14)
+## 005 — Policies & Budgets
 
 ### automation_policies (per-client action modes)
 `id, agency_id, client_id, action_type, mode, min_approval_role, updated_at`
 
 Action types include: `pause_underperforming_ad`, `scale_budget_under_15_percent`, `create_new_ad`, `launch_campaign`, `change_budget_over_25_percent`, `change_billing`…
 
-Modes: `advisory | approval | autopilot | owner_approval | forbidden` (example mapping from §13).
+Modes: `advisory | approval | autopilot | owner_approval | forbidden`.
 
 ### budget_limits (Budget Governor inputs)
 `id, agency_id, client_id, ad_account_id NULL, scope (account/campaign), kind (daily_max / monthly_max / auto_scale_max_increase / auto_scale_max_decrease / max_new_campaigns_per_day), value jsonb`

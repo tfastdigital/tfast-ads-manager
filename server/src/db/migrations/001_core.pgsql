@@ -1,4 +1,4 @@
--- 001_core.sql — Tenancy, identity, connections (§9, §10)
+-- 001_core.sql — Tenancy, identity, connections
 -- PostgreSQL dialect (run with psql / pg driver, not SQL Server).
 -- gen_random_uuid() is built into PostgreSQL 13+ (no pgcrypto needed).
 
@@ -55,7 +55,7 @@ CREATE TABLE client_members (
   PRIMARY KEY (client_id, user_id)
 );
 
--- ── Connection Registry (§9) ──────────────────────────────
+-- ── Connection Registry ───────────────────────────────────
 -- credential_reference points at the server-side secret store — never a secret itself.
 CREATE TABLE connections (
   id                    uuid PRIMARY KEY DEFAULT gen_random_uuid(),

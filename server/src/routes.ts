@@ -1,5 +1,5 @@
 /**
- * API routes — Phase 1b/2 surface.
+ * API routes.
  * Every route resolves the tenant from the verified session (req.session),
  * never from client input. RBAC via roleAtLeast.
  */
@@ -51,7 +51,7 @@ const DevLoginSchema = z.object({
 });
 
 export async function registerRoutes(app: FastifyInstance): Promise<void> {
-  // ── TikTok OAuth (§9 — the production connection method) ─
+  // ── TikTok OAuth — the production connection method ──────
   // Step 1: dashboard requests an auth URL. State binds tenant + user.
   app.get('/api/v1/clients/:clientId/connections/tiktok/oauth/start', async (req, reply) => {
     const s = req.session;
@@ -347,7 +347,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return { context: await buildBrainContext(clientScope(req as never, clientId)) };
   });
 
-  // ── TikTok Tool Gateway (Phase 3) ──────────────────────
+  // ── TikTok Tool Gateway ────────────────────────────────────
   app.post('/api/v1/clients/:clientId/tiktok/report', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -395,7 +395,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return reply.code(outcome.ok ? 200 : 502).send(outcome);
   });
 
-  // ── Approvals (§13) ────────────────────────────────────
+  // ── Approvals ──────────────────────────────────────────────
   app.get('/api/v1/clients/:clientId/approvals', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -433,7 +433,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return summary;
   });
 
-  // ── Morning Brief (§18) ────────────────────────────────
+  // ── Morning Brief ──────────────────────────────────────────
   app.post('/api/v1/jobs/morning-brief', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -469,7 +469,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return { brief: rows[0] ?? null };
   });
 
-  // ── Research (Phase 4, API Direct) ─────────────────────
+  // ── Research (API Direct) ──────────────────────────────────
   app.post('/api/v1/clients/:clientId/research/run', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -494,7 +494,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return { items: rows };
   });
 
-  // ── Meta / Google gateways (Phase 8) ───────────────────
+  // ── Meta / Google gateways ─────────────────────────────────
   app.post('/api/v1/clients/:clientId/meta/:mode', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -539,7 +539,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return res.ok ? res : reply.code(502).send(res);
   });
 
-  // ── Creative Intelligence (Phase 6, §11) ───────────────
+  // ── Creative Intelligence ──────────────────────────────────
   app.post('/api/v1/clients/:clientId/creative/analyze', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -577,7 +577,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return { memory_id: memoryId };
   });
 
-  // ── Experiment Engine (Phase 6, §12) ───────────────────
+  // ── Experiment Engine ──────────────────────────────────────
   app.post('/api/v1/clients/:clientId/experiments', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
@@ -604,7 +604,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return evaluateExperiment(clientScope(req as never, clientId), experimentId);
   });
 
-  // ── Business Outcomes (Phase 7, §19–20) ────────────────
+  // ── Business Outcomes ──────────────────────────────────────
   app.post('/api/v1/clients/:clientId/leads', async (req, reply) => {
     const s = req.session;
     if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });

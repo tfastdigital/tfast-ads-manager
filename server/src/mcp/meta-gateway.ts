@@ -1,5 +1,5 @@
 /**
- * Meta Ads gateway adapter (Phase 8, §28).
+ * Meta Ads gateway adapter.
  * Same safety pipeline as TikTok — context resolution + executor are the
  * only Meta-specific parts. MCP endpoint: META_MCP_URL.
  * Tool names are keyword-discovered like the TikTok adapter.

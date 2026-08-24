@@ -1,5 +1,5 @@
 /**
- * TikTok OAuth 2.0 provider (§9 — the production connection method).
+ * TikTok OAuth 2.0 provider — the production connection method.
  *
  * Flow:
  *   dashboard → GET /oauth/start → TikTok auth URL (state bound to client)

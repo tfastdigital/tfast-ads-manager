@@ -1,7 +1,7 @@
 /**
  * Seed — idempotent bootstrap for local development.
  * Creates the TFast Digital Agency, a dev user, a sample client, the
- * §13 default automation policy set, and baseline budget limits.
+ * default automation policy set, and baseline budget limits.
  * Run: npm run seed
  */
 import { randomUUID } from 'node:crypto';
@@ -62,7 +62,7 @@ export async function seed(): Promise<void> {
   );
   const clientId = clientResult.rows[0].id;
 
-  // §13 example policy set
+  // example policy set
   const policies: Array<[string, 'advisory' | 'approval' | 'autopilot' | 'owner_approval' | 'forbidden', string]> = [
     ['pause_underperforming_ad', 'autopilot', 'media_buyer'],
     ['scale_budget_under_15_percent', 'autopilot', 'media_buyer'],
@@ -80,7 +80,7 @@ export async function seed(): Promise<void> {
     );
   }
 
-  // §14 budget limits
+  // budget limits
   const limits: Array<[string, string, string]> = [
     ['account', 'daily_max', '{"amount": 500, "currency": "USD"}'],
     ['account', 'monthly_max', '{"amount": 10000, "currency": "USD"}'],
@@ -97,7 +97,7 @@ export async function seed(): Promise<void> {
     );
   }
 
-  // Starter Client Brain (§4)
+  // Starter Client Brain
   await pool.query(
     `INSERT INTO client_brains (agency_id, client_id, section, content)
      VALUES ($1, $2, 'business', $3::jsonb), ($1, $2, 'economics', $4::jsonb)

@@ -1,5 +1,5 @@
 /**
- * Budget Governor (§14) — DETERMINISTIC financial safety.
+ * Budget Governor — deterministic financial safety.
  *
  * LLMs must never have unrestricted authority over advertising spend.
  * This module executes in application code. It has no LLM call path
@@ -87,7 +87,7 @@ export function evaluateBudgetChange(p: BudgetChangeProposal): BudgetDecision {
     }
   }
 
-  // 4. Auto-scale step limits — §14: IF proposed_budget_change > client.auto_scale_limit THEN require approval.
+  // 4. Auto-scale step limits — IF proposed_budget_change > client.auto_scale_limit THEN require approval.
   if (p.kind === 'budget_increase' && p.current_budget != null && p.proposed_budget != null) {
     const pct = ((p.proposed_budget - p.current_budget) / p.current_budget) * 100;
     const cap = p.limits.auto_scale_max_increase_pct ?? 0;

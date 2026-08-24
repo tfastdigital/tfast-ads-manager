@@ -1,5 +1,5 @@
 /**
- * Dry-Run Engine (§15).
+ * Dry-Run Engine.
  *
  * Every write-capable advertising tool supports DRY RUN before EXECUTE.
  * A dry run returns the full decision surface; execution proceeds only

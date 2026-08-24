@@ -4,7 +4,7 @@ description: "Reconcile platform-reported conversions with business reality — 
 ---
 # TFast Conversion Analysis
 
-Never trust platform conversions at face value (§8 of the depth-of-analysis discipline).
+Never trust platform conversions at face value (see the depth-of-analysis discipline).
 
 ## Check list
 

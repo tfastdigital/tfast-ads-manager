@@ -1,5 +1,5 @@
 /**
- * Approval Engine (§13) — deterministic enforcement of automation modes.
+ * Approval Engine — deterministic enforcement of automation modes.
  *
  * Modes per client per action_type:
  *   advisory       — AI analyzes, human executes (AI may not execute)

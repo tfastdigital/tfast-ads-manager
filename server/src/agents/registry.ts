@@ -1,8 +1,8 @@
 /**
- * Agent Registry (§5) — the TFast specialist roster.
+ * Agent Registry — the TFast specialist roster.
  *
  * LLM agents (via providers/router) + deterministic modules (no LLM).
- * Agents communicate through structured outputs (zod) — dev rule 6.
+ * Agents communicate through structured outputs (zod).
  */
 import { z } from 'zod';
 
@@ -147,7 +147,7 @@ export const agents: AgentDefinition[] = [
     name: 'experiment-agent',
     kind: 'llm',
     task: 'strategy',
-    description: 'Creates and evaluates experiments (§12 cycle).',
+    description: 'Creates and evaluates experiments.',
     outputSchema: ExperimentProposalSchema,
   },
   // ── Deterministic modules (never an LLM in the decision path) ──
@@ -155,14 +155,14 @@ export const agents: AgentDefinition[] = [
     name: 'budget-governor',
     kind: 'deterministic',
     task: null,
-    description: 'Enforces financial rules (§14). Implemented in core/budget-governor.ts.',
+    description: 'Enforces financial rules. Implemented in core/budget-governor.ts.',
     outputSchema: z.object({ allowed: z.boolean(), requires_approval: z.boolean(), reason: z.string() }),
   },
   {
     name: 'approval-agent',
     kind: 'deterministic',
     task: null,
-    description: 'Determines advisory/approval/autopilot/forbidden enforcement (§13). Implemented in core/approvals.ts.',
+    description: 'Determines advisory/approval/autopilot/forbidden enforcement. Implemented in core/approvals.ts.',
     outputSchema: z.object({ executionAllowed: z.boolean(), approvalRequired: z.boolean(), status: z.string(), reason: z.string() }),
   },
 ];

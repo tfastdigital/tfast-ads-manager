@@ -1,5 +1,5 @@
 /**
- * TFast Agency Commander (§3) — portfolio-level orchestration.
+ * TFast Agency Commander — portfolio-level orchestration.
  *
  * The Commander NEVER calls write tools directly: it aggregates data and
  * emits structured findings/recommendations that enter the safety pipeline.

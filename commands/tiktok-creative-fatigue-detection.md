@@ -41,7 +41,7 @@ For each `Fatigued` or `Dead` ad, one line:
 - `⚠️  [Ad name] — Early Warning. Watch — likely needs a refresh in 7–14 days (sooner than Meta would).`
 
 For each `Healthy` or `Early Warning` winning ad with strong CPA/ROAS:
-- `✨ [Ad name] — Healthy winner. Recommendation: extract the pattern, brief 2–3 variants on the same concept.`
+- `[Ad name] — Healthy winner. Recommendation: extract the pattern, brief 2–3 variants on the same concept.`
 
 For Spark Ads specifically, add the organic-engagement check:
 - `🔍 [Ad name] — Spark Ad: organic post X days old, engagement [rising/decaying].`

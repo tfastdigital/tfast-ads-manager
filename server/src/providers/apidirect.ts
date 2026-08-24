@@ -1,10 +1,10 @@
 /**
- * API Direct client (§8) — external market/social intelligence layer.
+ * API Direct client — external market/social intelligence layer.
  * Sources: TikTok, Instagram, Facebook, Reddit, YouTube, X, LinkedIn,
  * news, websites, forums.
  *
  * SECURITY: the API key lives server-side (config). Never ship it to the
- * frontend. All responses are validated before use (dev rule 7).
+ * frontend. All responses are validated against zod schemas before use.
  *
  * Uses API Direct's platform endpoints and X-API-Key authentication.
  */

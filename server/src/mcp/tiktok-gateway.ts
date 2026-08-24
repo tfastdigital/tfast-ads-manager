@@ -1,5 +1,5 @@
 /**
- * TFast Tool Gateway → TikTok MCP (§7).
+ * TFast Tool Gateway → TikTok MCP.
  *
  *   TFast Agent → TFast Tool Gateway → TikTok MCP → TikTok Ads
  *
@@ -9,7 +9,7 @@
  *      injects it from the connection registry.
  *   2. Enforce permissions from the connection registry.
  *   3. Wrap every write op in: dry-run → approval → budget governor → audit.
- *   4. Idempotency keys for all mutations (dev rule 8).
+ *   4. Idempotency keys for all mutations.
  *
  * Transport: official TikTok for Business MCP Server via Streamable HTTP.
  * Config-driven: TIKTOK_MCP_URL + TIKTOK_MCP_TOKEN from .env.
@@ -258,10 +258,10 @@ export async function tiktokGateway(lookup: ConnectionLookup, req: GatewayReques
 }
 
 // ── Mutation pipeline: dry-run → approval → budget governor → audit ──
-// All policy decisions live in the shared safety pipeline (§13–15).
+// All policy decisions live in the shared safety pipeline.
 // This adapter only provides TikTok context resolution + the executor.
 
-/** Conservative action-type inference for policy lookup (§13). */
+/** Conservative action-type inference for policy lookup. */
 function inferActionType(operation: TikTokOperation, params: Record<string, unknown>): string {
   if (operation === 'account.pause_all') return 'change_budget_over_25_percent'; // owner approval by default
   if (operation === 'ad.update') return 'pause_underperforming_ad';
@@ -351,7 +351,7 @@ export function newIdempotencyKey(): string {
   return randomUUID();
 }
 
-// ── Human approval → execution path (§13) ─────────────────
+// ── Human approval → execution path ─────────────────────────
 
 export interface ApprovalRow {
   id: string;

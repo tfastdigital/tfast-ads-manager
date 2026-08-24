@@ -1,18 +1,18 @@
 # TFast Ads Manager — Security Model
 
-Security is a first-class requirement (§25). The design principle: **the LLM is an untrusted recommendation engine; all authority lives in deterministic code.**
+Security is a first-class requirement. The design principle: **the LLM is an untrusted recommendation engine; all authority lives in deterministic code.**
 
 ## 1. Threat Model
 
 | Threat | Control |
 |---|---|
 | Cross-client data leakage (bug or malicious prompt) | Tenant middleware + scoped queries + RLS defense-in-depth; gateway refuses scope-less tool calls |
-| LLM overspends | Budget Governor in code (§14); emergency stop |
-| Unauthorized mutation | Approval Engine modes (§13) + RBAC |
+| LLM overspends | Budget Governor in code; emergency stop |
+| Unauthorized mutation | Approval Engine modes + RBAC |
 | Credential theft from frontend | Secrets server-side only; frontend never receives keys |
 | Credential theft from repo | `.env` gitignored; credential_reference indirection in DB |
 | Prompt injection | Tool calls validated against typed schemas; no free-form tool selection; allow-listed operations |
-| Non-repudiation gaps | Append-only audit logs (§26) |
+| Non-repudiation gaps | Append-only audit logs |
 | Replay/duplicate mutations | Idempotency keys on every write |
 | Abuse / rate spikes | Rate limits per tenant + per user; MCP permission scoping |
 
@@ -22,9 +22,9 @@ Security is a first-class requirement (§25). The design principle: **the LLM is
 2. Every request carries a resolved `TenantScope { agency_id, client_id? }`.
 3. Data-access layer appends `WHERE agency_id = $1 [AND client_id = $2]` — enforced by query-builder, not convention.
 4. Row-Level Security enabled on core tables; `app.agency_id` / `app.client_id` set per transaction.
-5. Tool Gateway resolves `client_id → connection → advertiser_id` itself; agents cannot supply account IDs arbitrarily (§7).
+5. Tool Gateway resolves `client_id → connection → advertiser_id` itself; agents cannot supply account IDs arbitrarily.
 
-Isolation tests are mandatory in CI (dev rule 12).
+Isolation tests are mandatory in CI.
 
 ## 3. RBAC
 
@@ -41,7 +41,7 @@ Client-level roles (`client_members`) narrow agency roles further. Approval requ
 ## 4. Secrets Management
 
 - All provider keys (OpenAI, DeepSeek, API Direct), DB URL, MCP tokens: `.env` (gitignored) or a server-side secret store in production.
-- `connections.credential_reference` stores a **reference** to the secret store, never the secret (§9).
+- `connections.credential_reference` stores a **reference** to the secret store, never the secret.
 - Frontend (web/) is credential-free; it calls the server API only.
 - Keys are never logged: audit/redaction middleware strips `Authorization` and known key patterns.
 
@@ -49,9 +49,9 @@ Client-level roles (`client_members`) narrow agency roles further. Approval requ
 
 - The Tool Gateway exposes an **allow-list** of operations per platform, mapped to action types.
 - TikTok MCP tokens are server-side; the gateway enforces: tenant scope → permission check → dry-run (writes) → approval → budget check → execute → audit.
-- Rate limits per (tenant, provider) with exponential backoff and retry budgets (dev rule 10).
+- Rate limits per (tenant, provider) with exponential backoff and retry budgets.
 
-## 6. Budget Governor (§14) — Deterministic
+## 6. Budget Governor — Deterministic
 
 Evaluated in `server/src/core/budget-governor.ts` before every spend-affecting operation:
 
@@ -70,7 +70,7 @@ IF proposed_budget_change > client.auto_scale_limit THEN require approval
 
 Governor returns `{ allowed, requires_approval, reason, limit_evidence }`. If the Governor says no, the operation stops — no LLM override path exists.
 
-## 7. Dry-Run System (§15)
+## 7. Dry-Run System
 
 Every write-capable advertising tool supports `DRY RUN` before `EXECUTE`. A dry run returns:
 
@@ -82,7 +82,7 @@ financial_impact, policy_evaluation, approval_requirement
 
 Execution proceeds only when policies permit and (in approval/autopilot mismatch cases) a human approves.
 
-## 8. Approval Modes (§13)
+## 8. Approval Modes
 
 Per client, per action type: `advisory | approval | autopilot | owner_approval | forbidden`.
 
@@ -99,7 +99,7 @@ Example policy set:
 
 Approvals expire; expired approvals never auto-execute.
 
-## 9. Auditability (§26)
+## 9. Auditability
 
 Every AI action records: `agent, model, agency_id, client_id, account_id, campaign_id, input, reason, decision, tool, proposed_parameters, policy_result, approval_status, execution_result, before_state, after_state, timestamp`.
 
@@ -109,5 +109,5 @@ A human can ask *"Why did TFast AI pause this advertisement?"* and receive the f
 
 - Session controls: short-lived tokens, refresh rotation, server-side revocation.
 - Rate limits per user and per tenant (API + AI provider calls).
-- All external API data validated against zod schemas before use (dev rule 7).
-- Writes idempotent via idempotency keys (dev rule 8).
+- All external API data validated against zod schemas before use.
+- Writes idempotent via idempotency keys.

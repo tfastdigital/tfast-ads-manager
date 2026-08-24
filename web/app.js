@@ -2,7 +2,7 @@
  * TFast Agency Command Center — zero-build SPA.
  * All data flows through the authenticated /api/v1 surface; the server
  * enforces tenant isolation and RBAC. Provider credentials never touch
- * this code (SECURITY_MODEL §4).
+ * this code (see docs/SECURITY_MODEL.md).
  */
 const API = '';
 let token = localStorage.getItem('tfast_token') || '';
@@ -129,7 +129,7 @@ function logout() {
   renderLogin();
 }
 
-/* ── Command Center (§16) ───────────────────────────────── */
+/* ── Command Center ─────────────────────────────────────────── */
 async function showCommandCenter() {
   shell('command', '<div class="empty">Loading portfolio…</div>');
   try {
@@ -249,7 +249,7 @@ async function addClient() {
   }
 }
 
-/* ── Client workspace (§17) ─────────────────────────────── */
+/* ── Client workspace ───────────────────────────────────────── */
 function openClient(clientId) {
   currentClient = clientId;
   currentTab = 'overview';
@@ -575,7 +575,7 @@ async function saveBrain() {
   }
 }
 
-/* ── Ask TFast AI (§24) ─────────────────────────────────── */
+/* ── Ask TFast AI ───────────────────────────────────────────── */
 function showAsk() {
   shell('ask', `
     <h1 style="margin-bottom:16px">Ask TFast AI</h1>

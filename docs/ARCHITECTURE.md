@@ -30,7 +30,7 @@ flowchart TB
 
     subgraph GATEWAY["TFast Tool Gateway"]
         TIKTOK["TikTok MCP<br/>(official TikTok for Business)"]
-        OTHER["Meta / Google adapters<br/>(Phase 8)"]
+        OTHER["Meta / Google adapters"]
         APIDIRECT["API Direct<br/>(market intelligence)"]
     end
 
@@ -80,56 +80,56 @@ agency_id → client_id → ad_account_id → platform → actor (user/agent)
 2. API middleware resolves the tenant from the auth token — never from client input.
 3. Agent tool calls receive an explicit `TenantScope`; the Tool Gateway refuses scoped-agnostic calls.
 4. Client memory (`memories.client_id IS NOT NULL`) is never readable cross-client.
-5. Cross-client learning goes through **Agency Knowledge** (anonymized patterns only — §21).
+5. Cross-client learning goes through **Agency Knowledge** (anonymized patterns only).
 
 ---
 
-## 3. Proposed Directory Structure
+## 3. Directory Structure
 
 ```
 <root>/
-├── skills/                          # [KEEP] agent-layer methodology (auto-discovered)
+├── skills/                          # agent-layer methodology (auto-discovered)
 │   ├── meta-*  google-ads-*  tiktok-*  ga4-*  shopify-*  search-console-*
 │   ├── creative-research/  documents-*  python-sandbox-skill/
-│   └── (ADD in later phases)
+│   └── skill packs:
 │       ├── agency/          # daily-agency-review, portfolio-analysis, client-priority-ranking, client-onboarding
 │       ├── research/        # competitor-analysis, trend-discovery, audience-language, offer-research
 │       ├── strategy/        # campaign-strategy, audience-strategy, offer-strategy, funnel-analysis
 │       ├── creative/        # creative-analysis, hook-generation, script-generation, creative-experiments
 │       ├── optimization/    # campaign-diagnosis, budget-scaling, anomaly-detection, campaign-recovery
 │       └── attribution/     # conversion-analysis, crm-attribution, revenue-attribution, profit-analysis
-├── commands/                        # [KEEP] slash commands (11)
-├── hooks/                           # [MODIFY] branding + TFast endpoints
-├── .claude-plugin/ .codex-plugin/   # [MODIFY] branding (identifiers kept)
-├── .mcp.json                        # [MODIFY] agent-layer MCP config (ad connections managed server-side)
-├── server/                          # [ADD] backend
+├── commands/                        # slash commands
+├── hooks/                           # session hooks
+├── .claude-plugin/ .codex-plugin/   # plugin manifests
+├── .mcp.json                        # agent-layer MCP config (connections managed server-side)
+├── server/                          # backend
 │   ├── src/
 │   │   ├── config.ts                # env parsing (zod) — secrets server-side only
 │   │   ├── server.ts                # Fastify bootstrap
 │   │   ├── db/
-│   │   │   ├── migrations/          # 001_core 002_ads 003_ai_memory 004_business 005_policies
+│   │   │   ├── migrations/          # ordered .pgsql migrations (applied by db/migrate.ts)
 │   │   │   └── pool.ts
 │   │   ├── core/                    # DETERMINISTIC SAFETY CORE
 │   │   │   ├── tenant.ts            # TenantScope type + guard
-│   │   │   ├── budget-governor.ts   # §14 — code, not prompts
-│   │   │   ├── dry-run.ts           # §15
-│   │   │   ├── approvals.ts         # §13 automation modes
-│   │   │   └── audit.ts             # §26
+│   │   │   ├── budget-governor.ts   # financial rules in code, not prompts
+│   │   │   ├── dry-run.ts           # preview before execute
+│   │   │   ├── approvals.ts         # automation modes
+│   │   │   └── audit.ts             # append-only evidence chain
 │   │   ├── agents/
-│   │   │   ├── registry.ts          # §5 agent roster + zod output contracts
-│   │   │   └── commander.ts         # (Phase 2 wiring)
+│   │   │   ├── registry.ts          # agent roster + zod output contracts
+│   │   │   └── commander.ts         # portfolio orchestration
 │   │   ├── providers/
-│   │   │   ├── router.ts            # §6 OpenAI/DeepSeek routing
+│   │   │   ├── router.ts            # OpenAI/DeepSeek routing
 │   │   │   ├── openai.ts  deepseek.ts
-│   │   │   └── apidirect.ts         # §8 market intelligence client
+│   │   │   └── apidirect.ts         # market intelligence client
 │   │   └── mcp/
-│   │       └── tiktok-gateway.ts    # §7 TFast Tool Gateway → TikTok MCP
+│   │       └── tiktok-gateway.ts    # TFast Tool Gateway → TikTok MCP
 │   ├── package.json  tsconfig.json
-├── web/                             # [ADD] dashboard (later phase)
-├── docs/                            # [ADD] this documentation set
-├── .env / .env.example              # [ADD] secrets (gitignored)
-├── README.md                        # [MODIFY] TFast branding + attribution
-├── LICENSE                          # [KEEP] MIT © TFast Digital Agency
+├── web/                             # browser dashboard (no build step)
+├── docs/                            # documentation
+├── .env / .env.example              # secrets (gitignored)
+├── README.md
+├── LICENSE                          # MIT © TFast Digital Agency
 ```
 
 ---
@@ -137,7 +137,7 @@ agency_id → client_id → ad_account_id → platform → actor (user/agent)
 ## 4. Component Responsibilities
 
 ### Agent layer (root: skills + commands + hooks)
-Unchanged role: battle-tested marketing methodology, loaded by the CLI agent. In TFast, these skills run **inside** the server's agent orchestrator (same prompts, server-side execution), and the Commander delegates to them by name.
+Marketing methodology, loaded by the CLI agent. In TFast, these skills run **inside** the server's agent orchestrator (same prompts, server-side execution), and the Commander delegates to them by name.
 
 ### Server
 - **API Layer** — REST + SSE endpoints, tenant middleware, RBAC.
@@ -148,7 +148,7 @@ Unchanged role: battle-tested marketing methodology, loaded by the CLI agent. In
 - **Providers** — model routing + API Direct research client.
 
 ### Web
-Phase 1+: `Command Center / Clients / Campaigns / Creatives / Research / AI Insights / Experiments / Approvals / Automations / Reports / Connections / Settings` (§16, §17). Never receives provider credentials.
+Dashboard surface: `Command Center / Clients / Campaigns / Creatives / Research / AI Insights / Experiments / Approvals / Automations / Reports / Connections / Settings`. Never receives provider credentials.
 
 ### Data
 PostgreSQL + pgvector. Full schema in `docs/DATABASE_SCHEMA.md`.
@@ -159,11 +159,11 @@ PostgreSQL + pgvector. Full schema in `docs/DATABASE_SCHEMA.md`.
 
 **Ask TFast AI (chat)** → Commander → delegates → specialists → Tool Gateway (read) / Safety core (write) → structured answer.
 
-**Morning Brief (§18)** → scheduled job → per-client snapshots over 1/3/7/14/30d → severity-ranked findings → `# TFast Morning Brief` sections → notifications + dashboard.
+**Morning Brief** → scheduled job → per-client snapshots over 1/3/7/14/30d → severity-ranked findings → `# TFast Morning Brief` sections → notifications + dashboard.
 
-**Experiment cycle (§12)** → Observation → Diagnosis → Hypothesis → Experiment → Result → Lesson → Memory (all persisted, linked).
+**Experiment cycle** → Observation → Diagnosis → Hypothesis → Experiment → Result → Lesson → Memory (all persisted, linked).
 
-**Approval flow (§13)** → AI prepares action → Dry-Run produces `policy_evaluation` → Approval Engine checks `automation_policies` mode (`advisory | approval | autopilot | owner_approval | forbidden`) → Budget Governor validates financial limits → execute (idempotent) → audit log.
+**Approval flow** → AI prepares action → Dry-Run produces `policy_evaluation` → Approval Engine checks `automation_policies` mode (`advisory | approval | autopilot | owner_approval | forbidden`) → Budget Governor validates financial limits → execute (idempotent) → audit log.
 
 ---
 
@@ -172,5 +172,5 @@ PostgreSQL + pgvector. Full schema in `docs/DATABASE_SCHEMA.md`.
 1. Tenant isolation in every query and every tool call.
 2. Secrets only in `.env` / server-side secret store; never in frontend bundles.
 3. Budget/approval/dry-run logic lives in deterministic code.
-4. Every AI mutation is auditable (§26 record shape).
+4. Every AI mutation is auditable.
 5. Skills and playbooks are maintained by TFast Digital Agency — single source of truth for CLI and server execution.

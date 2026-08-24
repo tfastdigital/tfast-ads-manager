@@ -1,7 +1,7 @@
 /**
  * TFast Ads Manager — API bootstrap.
  * Auth middleware resolves the session server-side; tenant values never
- * come from client input. Routes grow by phase.
+ * come from client input.
  */
 import Fastify from 'fastify';
 import { config } from './config.js';

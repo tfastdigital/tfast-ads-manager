@@ -1,6 +1,6 @@
 # TFast Ads Manager — Agent Architecture
 
-## Agent Roster (§5)
+## Agent Roster
 
 | Agent | Type | Responsibility |
 |---|---|---|
@@ -12,15 +12,15 @@
 | Performance Analyst | LLM (DeepSeek for bulk, OpenAI for synthesis) | Performance analysis, Pareto, baselines, diagnosis |
 | Optimization Agent | LLM (OpenAI for decisions) | Scaling/pausing/restructuring opportunities |
 | Attribution Agent | LLM (OpenAI) | Ad activity ↔ leads/sales/bookings/revenue |
-| Experiment Agent | LLM (OpenAI) | Design + evaluate experiments (§12 cycle) |
-| **Budget Governor** | **Deterministic code** | Financial rules — no LLM in the loop (§14) |
-| **Approval Agent** | **Deterministic code + policy** | Advisory / Approval / Autopilot modes (§13) |
+| Experiment Agent | LLM (OpenAI) | Design + evaluate experiments |
+| **Budget Governor** | **Deterministic code** | Financial rules — no LLM in the loop |
+| **Approval Agent** | **Deterministic code + policy** | Advisory / Approval / Autopilot modes |
 
 **Boundary rule:** LLMs produce *recommendations*. Only deterministic modules decide *execution*.
 
 ---
 
-## Model Routing (§6)
+## Model Routing
 
 ```mermaid
 flowchart LR
@@ -50,7 +50,7 @@ flowchart LR
 
 ## Structured Output Contracts
 
-Agents communicate through typed schemas (zod), not free-form text (§5, dev rule 6).
+Agents communicate through typed schemas (zod), not free-form text.
 
 ```ts
 // PortfolioSnapshot — Commander → dashboard/chat
@@ -98,14 +98,14 @@ The Commander **never calls write tools directly** — it emits `OptimizationRec
 
 ---
 
-## Client Brain Loading (§4)
+## Client Brain Loading
 
 Before any recommendation or decision for a client, the brain service loads:
 `business, brand, customers, economics, advertising_history, competitors, ai_knowledge`
 
 Loaded as compact structured context (not raw JSON dumps) into the agent prompt. Brain updates are versioned and audited (`updated_by`, `version`).
 
-## Memory Model (§12, §21)
+## Memory Model
 
 ```
 memories (client-scoped, confidential)
@@ -118,7 +118,7 @@ agency_knowledge (anonymized, cross-client patterns)
 
 ---
 
-## Experiment Engine (§12)
+## Experiment Engine
 
 ```
 Observation → Diagnosis → Hypothesis → Experiment → Result → Lesson → Memory

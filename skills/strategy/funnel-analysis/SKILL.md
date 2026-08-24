@@ -25,7 +25,7 @@ Find the break in the chain. Data sources: platform reports, the Morning Brief's
 
 ## Cross-stage attribution
 
-Use `GET /api/v1/clients/{id}/attribution`: compare campaigns on qualified CPL and customer CPA, not just CPL. The campaign with the higher CPL can be the better business (§19).
+Use `GET /api/v1/clients/{id}/attribution`: compare campaigns on qualified CPL and customer CPA, not just CPL. The campaign with the higher CPL can be the better business.
 
 ## Output
 

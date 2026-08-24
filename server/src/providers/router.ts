@@ -1,5 +1,5 @@
 /**
- * Model Router (§6) — OpenAI (primary reasoning/orchestration) + DeepSeek (high-volume).
+ * Model Router — OpenAI (primary reasoning/orchestration) + DeepSeek (high-volume).
  * Business logic never hard-codes a provider: callers ask by TaskKind,
  * or pin a provider explicitly for controlled experiments.
  */
@@ -22,7 +22,7 @@ export type TaskKind =
   | 'analysis_bulk'
   | 'analysis_synthesis';
 
-/** §6 routing matrix. */
+/** TaskKind → provider routing matrix. */
 const TASK_ROUTING: Record<TaskKind, ProviderId> = {
   orchestration: 'openai',
   strategy: 'openai',

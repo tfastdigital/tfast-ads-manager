@@ -36,7 +36,7 @@ When the limit is hit, respond with exactly this tone and structure:
 
 ## Sub-Skill Index
 
-Each creation step in Phase 6 has a dedicated sub-skill. **Read the sub-skill at its step — not all upfront.**
+Each creation step has a dedicated sub-skill. **Read the sub-skill at its step — not all upfront.**
 
 | Step | Read before | Path |
 |------|------------|------|

@@ -12,7 +12,7 @@
     "migrate": "tsx src/db/migrate.ts",
     "seed": "tsx src/db/seed.ts",
     "verify:pipeline": "tsx scripts/verify-pipeline.ts",
-    "verify:phase67": "tsx scripts/verify-phase67.ts",
+    "verify:business": "tsx scripts/verify-business.ts",
     "verify:ai": "tsx scripts/verify-ai.ts"
   },
   "engines": {

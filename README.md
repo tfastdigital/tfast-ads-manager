@@ -49,7 +49,7 @@ Agent router + deterministic safety pipeline
 PostgreSQL + pgvector (PGlite fallback for development)
 ```
 
-Documentation: [Architecture](docs/ARCHITECTURE.md) · [Agents](docs/AGENT_ARCHITECTURE.md) · [Database](docs/DATABASE_SCHEMA.md) · [Security](docs/SECURITY_MODEL.md)
+Documentation: [Getting Started](docs/GETTING_STARTED.md) · [Architecture](docs/ARCHITECTURE.md) · [Agents](docs/AGENT_ARCHITECTURE.md) · [Database](docs/DATABASE_SCHEMA.md) · [Security](docs/SECURITY_MODEL.md)
 
 ## Requirements
 
@@ -194,7 +194,7 @@ npm run build
 npm run migrate
 npm run seed
 npm run verify:pipeline
-npm run verify:phase67
+npm run verify:business
 npm run verify:ai
 ```
 

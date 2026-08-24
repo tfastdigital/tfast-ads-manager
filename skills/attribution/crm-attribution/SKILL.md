@@ -4,7 +4,7 @@ description: "Attribute leads, qualified leads and customers to campaigns via th
 ---
 # TFast CRM Attribution
 
-Optimize against business outcomes, not platform conversions (§19).
+Optimize against business outcomes, not platform conversions.
 
 ## Data flow
 

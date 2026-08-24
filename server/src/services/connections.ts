@@ -1,5 +1,5 @@
 /**
- * Connection Registry service (§9) + TikTok resolver (§7).
+ * Connection Registry service + TikTok resolver.
  * credential_reference stores a pointer to the server-side secret store —
  * never the credential itself. Agents resolve accounts through this
  * service, never by guessing advertiser IDs.
@@ -71,7 +71,7 @@ export async function setConnectionStatus(
 }
 
 /**
- * Generic platform context resolution (Phase 8) — meta / google.
+ * Generic platform context resolution — meta / google.
  * account_external_id: TikTok = advertiser_id, Meta = ad account id,
  * Google = customer id. Agents never supply these; they are resolved here.
  */

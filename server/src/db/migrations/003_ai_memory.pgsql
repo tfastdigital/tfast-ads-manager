@@ -1,8 +1,8 @@
--- 003_ai_memory.sql — Client brains, memory, research, experiments, agent governance (§4, §12, §21, §26)
+-- 003_ai_memory.sql — Client brains, memory, research, experiments, agent governance
 -- PostgreSQL dialect (run with psql / pg driver, not SQL Server).
 CREATE EXTENSION IF NOT EXISTS vector;
 
--- ── Client Brain (§4) ─────────────────────────────────────
+-- ── Client Brain ──────────────────────────────────────────
 CREATE TABLE client_brains (
   id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agency_id  uuid NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE client_brains (
 );
 CREATE INDEX idx_brains_client ON client_brains (agency_id, client_id);
 
--- ── Memories: client-scoped + agency-scoped (§21) ─────────
+-- ── Memories: client-scoped + agency-scoped ──────────────
 CREATE TABLE memories (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agency_id     uuid NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE agency_knowledge (
 );
 CREATE INDEX idx_agency_knowledge_embedding ON agency_knowledge USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
--- ── Experiment Engine chain (§12) ─────────────────────────
+-- ── Experiment Engine chain ──────────────────────────────
 CREATE TABLE observations (
   id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agency_id  uuid NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE lessons (
   created_at        timestamptz NOT NULL DEFAULT now()
 );
 
--- ── Market intelligence (§8, API Direct) ──────────────────
+-- ── Market intelligence (API Direct) ─────────────────────
 CREATE TABLE competitors (
   id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agency_id  uuid NOT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE tool_calls (
 CREATE UNIQUE INDEX idx_tool_calls_idempotency ON tool_calls (agency_id, idempotency_key);
 CREATE INDEX idx_tool_calls_tenant ON tool_calls (agency_id, client_id);
 
--- ── Approvals (§13) ───────────────────────────────────────
+-- ── Approvals ────────────────────────────────────────────
 CREATE TABLE approvals (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agency_id     uuid NOT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE approvals (
 );
 CREATE INDEX idx_approvals_pending ON approvals (client_id, status);
 
--- ── Audit log (§26) — append-only ─────────────────────────
+-- ── Audit log — append-only ──────────────────────────────
 CREATE TABLE audit_logs (
   id                  uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   agent               text,
