@@ -24,7 +24,7 @@ TFast Ads Manager combines live advertising data, AI research, multi-client work
 
 - Connects TikTok for Business through OAuth 2.0, PKCE and dynamic client registration.
 - Discovers and calls official TikTok MCP tools for reporting and guarded operations.
-- Syncs campaign, ad-group and ad performance into PostgreSQL/pgvector.
+- Syncs TikTok, Meta and Google Ads campaign, ad-set/ad-group and ad performance into PostgreSQL/pgvector.
 - Researches competitors, trends and customer language through API Direct.
 - Produces AI-assisted morning briefs, diagnoses and recommendations.
 - Supports multi-client workspaces and client-specific knowledge.
@@ -160,7 +160,7 @@ API Direct is a paid service. Configure daily and monthly spending limits before
 
 **Run full cycle** performs:
 
-1. TikTok reporting sync for the previous 30 days.
+1. Reporting sync for TikTok, Meta and Google Ads (previous 30 days).
 2. Campaign/ad-group/ad normalization and storage.
 3. Portfolio analysis and anomaly detection.
 4. Morning Brief generation.
@@ -171,6 +171,8 @@ Optional development scheduler:
 ```dotenv
 MORNING_BRIEF_INTERVAL_HOURS=24
 TIKTOK_SYNC_INTERVAL_HOURS=6
+META_SYNC_INTERVAL_HOURS=6
+GOOGLE_SYNC_INTERVAL_HOURS=6
 ```
 
 Use a durable queue or managed scheduler in production.

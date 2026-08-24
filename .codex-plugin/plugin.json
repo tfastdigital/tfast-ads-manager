@@ -1,7 +1,7 @@
 {
   "name": "tfast-ads-manager",
   "version": "0.1.2",
-  "description": "TFast Ads Manager — a senior paid-media agent for Codex CLI. Audit, optimize, and launch campaigns across Google Ads, Meta (Facebook/Instagram), TikTok, LinkedIn, Bing, GA4, Shopify, Klaviyo & Search Console. 68 model-invoked AI ads playbooks for TFast Digital Agency.",
+  "description": "TFast Ads Manager — a senior paid-media agent for Codex CLI. Audit, optimize, and launch campaigns across Google Ads, Meta (Facebook/Instagram), TikTok, GA4, Shopify & Search Console. 68 model-invoked AI ads playbooks for TFast Digital Agency.",
   "author": {
     "name": "TFast Digital Agency"
   },
@@ -33,13 +33,10 @@
     "facebook-ads",
     "instagram-ads",
     "tiktok-ads",
-    "linkedin-ads",
-    "bing-ads",
     "ga4",
     "google-analytics",
     "search-console",
     "seo",
-    "klaviyo",
     "shopify",
     "tfast-ads-manager"
   ],
@@ -47,8 +44,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "TFast Ads Manager",
-    "shortDescription": "AI-powered advertising command center for agencies — Google Ads, Meta, TikTok, LinkedIn, Bing, GA4, Shopify, Klaviyo & Search Console. 68 AI ads playbooks.",
-    "longDescription": "TFast Ads Manager connects your agent to your clients' ad accounts and ships 68 expert-authored AI ads playbooks so it reasons like a senior performance marketer — not a generic chatbot.\n\n• 68 model-invoked skills covering Google Ads (Search, Shopping, PMax), Meta (Facebook/Instagram), TikTok, GA4, Shopify, Search Console, Klaviyo, LinkedIn, Bing Ads, document generation (DOCX, PPTX, PDF, XLSX), plus agency, research, strategy, creative, optimization and attribution packs.\n• Auto-loaded guardrails — recommendations follow the same constraints TFast uses internally (no synthetic data, no fabricated keywords, proper attribution discipline).\n• Audit, optimize, and create — pull insights, propose budget moves, build campaigns from natural-language briefs.\n• Multi-client agency platform — Client Brains, Agency Commander, budget governor, dry-run operations, and approval gates.\n\nBuilt for TFast Digital Agency.",
+    "shortDescription": "AI-powered advertising command center for agencies — Google Ads, Meta, TikTok, GA4, Shopify & Search Console. 68 AI ads playbooks.",
+    "longDescription": "TFast Ads Manager connects your agent to your clients' ad accounts and ships 68 expert-authored AI ads playbooks so it reasons like a senior performance marketer — not a generic chatbot.\n\n• 68 model-invoked skills covering Google Ads (Search, Shopping, PMax), Meta (Facebook/Instagram), TikTok, GA4, Shopify, Search Console, document generation (DOCX, PPTX, PDF, XLSX), plus agency, research, strategy, creative, optimization and attribution packs.\n• Auto-loaded guardrails — recommendations follow the same constraints TFast uses internally (no synthetic data, no fabricated keywords, proper attribution discipline).\n• Audit, optimize, and create — pull insights, propose budget moves, build campaigns from natural-language briefs.\n• Multi-client agency platform — Client Brains, Agency Commander, budget governor, dry-run operations, and approval gates.\n\nBuilt for TFast Digital Agency.",
     "developerName": "TFast Digital Agency",
     "category": "Productivity",
     "capabilities": [

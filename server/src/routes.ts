@@ -18,8 +18,9 @@ import {
 } from './mcp/tiktok-gateway.js';
 import { tiktokConnectionLookup } from './services/connections.js';
 import { syncTikTokReports } from './jobs/tiktok-sync.js';
-import { metaGateway, MetaOperations, type MetaOperation } from './mcp/meta-gateway.js';
-import { googleGateway, GoogleOperations, type GoogleOperation } from './mcp/google-gateway.js';
+import { syncPlatformReports } from './jobs/platform-sync.js';
+import { metaGateway, metaHealth, MetaOperations, type MetaOperation } from './mcp/meta-gateway.js';
+import { googleGateway, googleHealth, GoogleOperations, type GoogleOperation } from './mcp/google-gateway.js';
 import { runMorningBrief, listBriefs } from './jobs/morning-brief.js';
 import { runResearch, ResearchInputSchema } from './jobs/research.js';
 import {
@@ -433,6 +434,34 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return summary;
   });
 
+  app.post('/api/v1/jobs/meta-sync', async (req, reply) => {
+    const s = req.session;
+    if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+    if (!roleAtLeast(s.role, 'analyst')) return reply.code(403).send({ error: 'FORBIDDEN' });
+    const { client_id, days } = z
+      .object({ client_id: z.string().uuid().optional(), days: z.number().int().min(1).max(90).default(30) })
+      .parse(req.body ?? {});
+    return syncPlatformReports(
+      'meta',
+      { agency_id: s.agency_id, client_id: client_id, actor: { kind: 'user', id: s.user_id } },
+      days,
+    );
+  });
+
+  app.post('/api/v1/jobs/google-sync', async (req, reply) => {
+    const s = req.session;
+    if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+    if (!roleAtLeast(s.role, 'analyst')) return reply.code(403).send({ error: 'FORBIDDEN' });
+    const { client_id, days } = z
+      .object({ client_id: z.string().uuid().optional(), days: z.number().int().min(1).max(90).default(30) })
+      .parse(req.body ?? {});
+    return syncPlatformReports(
+      'google',
+      { agency_id: s.agency_id, client_id: client_id, actor: { kind: 'user', id: s.user_id } },
+      days,
+    );
+  });
+
   // ── Morning Brief ──────────────────────────────────────────
   app.post('/api/v1/jobs/morning-brief', async (req, reply) => {
     const s = req.session;
@@ -537,6 +566,24 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
       params,
     });
     return res.ok ? res : reply.code(502).send(res);
+  });
+
+  app.get('/api/v1/clients/:clientId/meta/health', async (req, reply) => {
+    const s = req.session;
+    if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+    if (!roleAtLeast(s.role, 'analyst')) return reply.code(403).send({ error: 'FORBIDDEN' });
+    const { clientId } = z.object({ clientId: z.string().uuid() }).parse(req.params);
+    const result = await metaHealth(clientScope(req as never, clientId));
+    return reply.code(result.ok ? 200 : 503).send(result);
+  });
+
+  app.get('/api/v1/clients/:clientId/google/health', async (req, reply) => {
+    const s = req.session;
+    if (!s) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+    if (!roleAtLeast(s.role, 'analyst')) return reply.code(403).send({ error: 'FORBIDDEN' });
+    const { clientId } = z.object({ clientId: z.string().uuid() }).parse(req.params);
+    const result = await googleHealth(clientScope(req as never, clientId));
+    return reply.code(result.ok ? 200 : 503).send(result);
   });
 
   // ── Creative Intelligence ──────────────────────────────────

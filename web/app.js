@@ -149,7 +149,7 @@ async function showCommandCenter() {
     shell('command', `
       <div class="page-head"><div><h1>Agency Command Center</h1><p>Live performance, automation, and decisions across every client.</p></div><button class="btn ghost" onclick="showCommandCenter()">Refresh data</button></div>
       <section class="automation-rail" aria-label="Automation status">
-        <div><strong>Automation desk</strong><span>Sync TikTok data, analyze it, and surface guarded actions.</span></div>
+        <div><strong>Automation desk</strong><span>Sync ad platform data, analyze it, and surface guarded actions.</span></div>
         <div class="automation-flow"><span>Connect</span><i></i><span>Sync</span><i></i><span>Analyze</span><i></i><span>Approve</span></div>
         <div class="action-row"><button class="btn" onclick="runAutomation(this)">Run full cycle</button></div>
       </section>
@@ -204,7 +204,7 @@ async function showClients() {
     const rows = clients.map((c) => `
       <tr onclick="openClient('${c.id}')" style="cursor:pointer">
         <td><strong>${esc(c.name)}</strong></td><td class="workspace-slug">${esc(c.slug)}</td><td><span class="pill healthy">${esc(c.status)}</span></td><td class="muted">${esc(c.timezone)}</td>
-        <td class="client-actions"><button class="btn small ghost" onclick="event.stopPropagation(); openClient('${c.id}')">Open workspace</button><button class="btn small" onclick="event.stopPropagation(); openClientConnections('${c.id}')">Connect TikTok</button></td>
+        <td class="client-actions"><button class="btn small ghost" onclick="event.stopPropagation(); openClient('${c.id}')">Open workspace</button><button class="btn small" onclick="event.stopPropagation(); openClientConnections('${c.id}')">Ad accounts</button></td>
       </tr>`).join('');
     shell('clients', `
       <div class="page-head"><div><h1>Clients</h1><p>Accounts, operating status, and scoped workspaces.</p></div><button class="btn" onclick="toggleAddClient()">Add client</button></div>
@@ -412,14 +412,15 @@ async function clientConnections() {
       <td>${esc(c.advertiser_id ?? '—')}</td>
       <td>${esc(c.permissions.join(', '))}</td>
       <td><span class="pill ${c.status === 'active' ? 'healthy' : 'info'}">${esc(c.status)}</span></td>
-      <td><button class="btn small ${c.status === 'active' ? 'danger' : ''}" onclick="toggleConnection('${c.id}', '${c.status === 'active' ? 'revoked' : 'active'}')">${c.status === 'active' ? 'Revoke' : 'Activate'}</button></td>
+      <td><button class="btn small ghost" onclick="testProviderConnection('${c.provider}', this)">Test</button><button class="btn small ghost" onclick="syncProviderConnection('${c.provider}', this)">Sync</button><button class="btn small ${c.status === 'active' ? 'danger' : ''}" onclick="toggleConnection('${c.id}', '${c.status === 'active' ? 'revoked' : 'active'}')">${c.status === 'active' ? 'Revoke' : 'Activate'}</button></td>
     </tr>`).join('');
-  return `<div class="section-head"><div><h2>TikTok connections</h2><p>OAuth tokens stay encrypted on the server. Advertiser IDs are resolved by the gateway.</p></div></div>
+  return `<div class="section-head"><div><h2>Ad platform connections</h2><p>Connection credentials stay encrypted on the server. Account IDs are resolved by the gateway.</p></div></div>
     <div class="connection-hero">
       <div><span class="status-dot"></span><strong>Official TikTok MCP</strong><p>Recommended for reporting and guarded ad operations.</p></div>
       <div class="action-row"><button class="btn ghost" onclick="testTikTokConnection(this)">Test connection</button><button class="btn" onclick="startTikTokMcpOAuth()">Connect with OAuth</button></div>
       <div id="connection-status" class="inline-status" aria-live="polite"></div>
     </div>
+    <div class="muted">Meta and Google Ads connect through the manual form below. The server must have META_MCP_URL / GOOGLE_MCP_URL configured, then use Test / Sync on each row.</div>
     <details class="manual-connection"><summary>Advanced: add a connection manually</summary><div class="form-grid">
         <select id="cn-provider">
           <option value="tiktok">tiktok</option>
@@ -436,7 +437,7 @@ async function clientConnections() {
       <div id="cn-err" class="error"></div>
       <div class="muted">Enter only a server-side secret reference, never a token.</div></details>
     <div class="table-wrap"><table><thead><tr><th>Provider</th><th>Account</th><th>Advertiser</th><th>Permissions</th><th>Status</th><th></th></tr></thead>
-    <tbody>${rows || '<tr><td class="empty" colspan="6">No connections — add your first TikTok account above.</td></tr>'}</tbody></table></div>`;
+    <tbody>${rows || '<tr><td class="empty" colspan="6">No connections — connect TikTok with OAuth or add a Meta / Google account above.</td></tr>'}</tbody></table></div>`;
 }
 
 function openClientConnections(clientId) {
@@ -462,15 +463,56 @@ async function testTikTokConnection(button) {
   }
 }
 
+async function testProviderConnection(provider, button) {
+  const status = document.getElementById('connection-status');
+  button.disabled = true;
+  status.className = 'inline-status loading';
+  status.textContent = `Checking ${provider} connection…`;
+  try {
+    const result = await api(`/api/v1/clients/${currentClient}/${provider}/health`);
+    status.className = result.ok ? 'inline-status success' : 'inline-status error';
+    status.textContent = result.message;
+  } catch (err) {
+    status.className = 'inline-status error';
+    status.textContent = err.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function syncProviderConnection(provider, button) {
+  const status = document.getElementById('connection-status');
+  button.disabled = true;
+  status.className = 'inline-status loading';
+  status.textContent = `Syncing ${provider} reports…`;
+  try {
+    const summary = await api(`/api/v1/jobs/${provider}-sync`, { method: 'POST', body: { client_id: currentClient, days: 30 } });
+    const total = Object.values(summary.rows ?? {}).reduce((a, b) => a + b, 0);
+    status.className = summary.errors?.length ? 'inline-status error' : 'inline-status success';
+    status.textContent = summary.errors?.length
+      ? `Sync finished with ${summary.errors.length} error(s) — ${summary.errors[0]}`
+      : `Sync complete — ${total} rows upserted.`;
+  } catch (err) {
+    status.className = 'inline-status error';
+    status.textContent = err.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
 async function runAutomation(button) {
   button.disabled = true;
   const original = button.textContent;
   button.textContent = 'Running sync…';
   try {
-    const sync = await api('/api/v1/jobs/tiktok-sync', { method: 'POST', body: { days: 30 } });
+    const errors = [];
+    for (const provider of ['tiktok', 'meta', 'google']) {
+      const sync = await api(`/api/v1/jobs/${provider}-sync`, { method: 'POST', body: { days: 30 } });
+      if (sync.errors?.length) errors.push(...sync.errors);
+    }
     button.textContent = 'Building brief…';
     await api('/api/v1/jobs/morning-brief', { method: 'POST', body: { include_ai_recommendations: true } });
-    button.textContent = sync.errors?.length ? `Complete · ${sync.errors.length} need attention` : 'Cycle complete';
+    button.textContent = errors.length ? `Complete · ${errors.length} need attention` : 'Cycle complete';
     setTimeout(() => showCommandCenter(), 900);
   } catch (err) {
     button.textContent = `Stopped: ${err.message}`;

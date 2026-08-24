@@ -157,3 +157,21 @@ async function permissionsForMeta(connectionId: string): Promise<string[]> {
   );
   return rows[0]?.permissions ?? [];
 }
+
+/**
+ * Connectivity check for the Meta gateway: MCP configured, an active
+ * connection registered, and the MCP tool list reachable.
+ */
+export async function metaHealth(scope: TenantScope): Promise<{ ok: boolean; configured: boolean; connected: boolean; message: string }> {
+  assertClientScoped(scope);
+  if (!config.META_MCP_URL) {
+    return { ok: false, configured: false, connected: false, message: 'META_MCP_URL is not configured. Set it in .env to enable the Meta gateway.' };
+  }
+  try {
+    await resolvePlatformContext(scope, 'meta');
+    await mcpClient().listTools();
+    return { ok: true, configured: true, connected: true, message: 'Meta MCP reachable and connection is active.' };
+  } catch (err) {
+    return { ok: false, configured: true, connected: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}

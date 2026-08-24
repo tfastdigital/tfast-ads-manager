@@ -146,3 +146,21 @@ export async function googleGateway(req: GoogleGatewayRequest): Promise<{ ok: bo
     error: outcome.error,
   };
 }
+
+/**
+ * Connectivity check for the Google gateway: MCP configured, an active
+ * connection registered, and the MCP tool list reachable.
+ */
+export async function googleHealth(scope: TenantScope): Promise<{ ok: boolean; configured: boolean; connected: boolean; message: string }> {
+  assertClientScoped(scope);
+  if (!config.GOOGLE_MCP_URL) {
+    return { ok: false, configured: false, connected: false, message: 'GOOGLE_MCP_URL is not configured. Set it in .env to enable the Google gateway.' };
+  }
+  try {
+    await resolvePlatformContext(scope, 'google');
+    await mcpClient().listTools();
+    return { ok: true, configured: true, connected: true, message: 'Google MCP reachable and connection is active.' };
+  } catch (err) {
+    return { ok: false, configured: true, connected: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}

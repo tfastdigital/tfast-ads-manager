@@ -1,6 +1,6 @@
 {
   "name": "tfast-ads-manager",
-  "description": "TFast Ads Manager — the AI-powered advertising command center for agencies. A senior paid-media team: audit, optimize, and launch campaigns across Google Ads, Meta, TikTok, LinkedIn, Bing, GA4, Shopify & Klaviyo. Built for TFast Digital Agency.",
+  "description": "TFast Ads Manager — the AI-powered advertising command center for agencies. A senior paid-media team: audit, optimize, and launch campaigns across Google Ads, Meta, TikTok, GA4 & Shopify. Built for TFast Digital Agency.",
   "owner": {
     "name": "TFast Digital Agency"
   },
@@ -8,7 +8,7 @@
     {
       "name": "tfast-ads-manager",
       "source": "./",
-      "description": "TFast Ads Manager — a senior AI ads team in your terminal. Meta strategists, Google Ads specialists, TikTok analysts, creative-fatigue analysts, GA4 attribution experts, Shopify ops leads. 68 expert-authored AI ads playbooks across Google Ads, Meta (Facebook/Instagram), TikTok, LinkedIn, Bing, GA4, Shopify, Klaviyo & Search Console + agency/research/strategy/creative/optimization/attribution packs + 11 morning-workflow slash commands.",
+      "description": "TFast Ads Manager — a senior AI ads team in your terminal. Meta strategists, Google Ads specialists, TikTok analysts, creative-fatigue analysts, GA4 attribution experts, Shopify ops leads. 68 expert-authored AI ads playbooks across Google Ads, Meta (Facebook/Instagram), TikTok, GA4, Shopify & Search Console + agency/research/strategy/creative/optimization/attribution packs + 11 morning-workflow slash commands.",
       "category": "productivity",
       "keywords": [
         "ai-ads",
@@ -33,11 +33,8 @@
         "facebook-ads",
         "instagram-ads",
         "tiktok-ads",
-        "linkedin-ads",
-        "bing-ads",
         "ga4",
         "shopify",
-        "klaviyo",
         "search-console",
         "tfast-ads-manager"
       ]

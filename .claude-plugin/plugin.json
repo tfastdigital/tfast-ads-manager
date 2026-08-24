@@ -1,6 +1,6 @@
 {
   "name": "tfast-ads-manager",
-  "description": "TFast Ads Manager — an AI-powered advertising command center for agencies. 68 expert-authored playbooks across Google Ads, Meta (Facebook/Instagram), TikTok, LinkedIn, Bing, GA4, Shopify, Klaviyo & Search Console + agency, research, strategy, creative, optimization and attribution packs + 11 morning-workflow slash commands. Built for TFast Digital Agency.",
+  "description": "TFast Ads Manager — an AI-powered advertising command center for agencies. 68 expert-authored playbooks across Google Ads, Meta (Facebook/Instagram), TikTok, GA4, Shopify & Search Console + agency, research, strategy, creative, optimization and attribution packs + 11 morning-workflow slash commands. Built for TFast Digital Agency.",
   "repository": "https://github.com/tfastdigital/tfast-ads-manager",
   "version": "0.1.2",
   "author": {
@@ -33,13 +33,10 @@
     "facebook-ads",
     "instagram-ads",
     "tiktok-ads",
-    "linkedin-ads",
-    "bing-ads",
     "ga4",
     "google-analytics",
     "search-console",
     "seo",
-    "klaviyo",
     "shopify",
     "tfast-ads-manager"
   ]
