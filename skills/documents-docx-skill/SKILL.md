@@ -1,19 +1,19 @@
 ---
 name: documents-docx-skill
-description: "Use when generating Word documents (.docx). Uses the marble_docx API."
+description: "Use when generating Word documents (.docx). Uses the tfast_docx API."
 ---
 # Python-docx Skill: DOCX Document Generation
 
-## Marble Library (PREFERRED)
+## TFast Library (PREFERRED)
 
-Use the `marble_docx` helper library. It provides themed headings, tables, rules, cover pages, two-column layouts, and paragraphs — all with automatic theming.
+Use the `tfast_docx` helper library. It provides themed headings, tables, rules, cover pages, two-column layouts, and paragraphs — all with automatic theming.
 
 **IMPORTANT**: Always use the library helpers below. Never manually define color constants, helper functions, or cell shading logic — the library handles all of this.
 
 This skill is the **complete API reference** — all palettes, font pairs, and methods are documented below. Use them directly in your code without any exploration calls.
 
 ```python
-from marble_docx import Doc
+from tfast_docx import Doc
 
 doc = Doc(palette='ocean', fonts='modern')
 # palette: midnight, forest, coral, terracotta, ocean, charcoal, teal, berry, sage, cherry
@@ -137,7 +137,7 @@ When the document needs real images returned by previous tool calls (ad thumbnai
 # ]
 
 # In code:
-from marble_docx import Doc
+from tfast_docx import Doc
 doc = Doc(palette='ocean')
 doc.heading('Top Performers', level=1)
 doc.rule()
@@ -160,13 +160,13 @@ Do NOT import `requests`/`urllib` from inside your code — network is blocked a
 6. **Don't use `doc.heading()` without `doc.rule()`** — headings need visual separation.
 7. **Don't manually define colors** — use theme keys: `'primary'`, `'success'`, `'error'`, `'secondary'`.
 8. **Don't use `page_break()` after every section** — only use between major sections (e.g. after cover page, before appendix). Excessive page breaks create blank pages.
-9. **NEVER use raw python-docx enums without importing them** — if using `doc.raw`, always import what you need: `from docx.enum.table import WD_TABLE_ALIGNMENT`, `from docx.enum.text import WD_ALIGN_PARAGRAPH`, `from docx.shared import Pt, Inches, RGBColor`. The `marble_docx` library handles this automatically — prefer it over raw API.
+9. **NEVER use raw python-docx enums without importing them** — if using `doc.raw`, always import what you need: `from docx.enum.table import WD_TABLE_ALIGNMENT`, `from docx.enum.text import WD_ALIGN_PARAGRAPH`, `from docx.shared import Pt, Inches, RGBColor`. The `tfast_docx` library handles this automatically — prefer it over raw API.
 10. **Respect page count constraints** — if the user asks for "a 2-page report", the final document must be ~2 content pages (cover page is extra). Plan your layout BEFORE writing code: pick 2-3 key sections max, use compact tables, limit charts to 1-2, and skip exhaustive breakdowns. A page holds ~4-5 sections of heading+paragraph, OR 1 table + 2 paragraphs + 1 chart. Fewer `page_break()` calls = fewer pages.
 
 ## Example — Professional Report
 
 ```python
-from marble_docx import Doc
+from tfast_docx import Doc
 
 doc = Doc(palette='ocean', fonts='elegant')
 
@@ -243,7 +243,7 @@ doc = Doc()
 raw = doc.raw  # docx.Document object
 
 # Helpers also exported:
-from marble_docx import shade_cell, replace_image
+from tfast_docx import shade_cell, replace_image
 shade_cell(cell, '1A73E8')
 replace_image(doc, 0, f'{WORKSPACE}/new_chart.png', width=5.0)
 ```
@@ -303,7 +303,7 @@ row.cells[1].text = '$500'
 
 ### Replace an image (e.g. regenerate a chart at different size)
 ```python
-from marble_docx import replace_image
+from tfast_docx import replace_image
 
 doc = Document(f'{WORKSPACE}/report.docx')
 # List images to find the right index

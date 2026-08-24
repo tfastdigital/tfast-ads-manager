@@ -1,19 +1,19 @@
 ---
 name: documents-pptx-skill
-description: "Use when generating PowerPoint presentations (.pptx). Uses the marble_pptx API."
+description: "Use when generating PowerPoint presentations (.pptx). Uses the tfast_pptx API."
 ---
 # Python-pptx Skill: PowerPoint Presentation Generation
 
-## Marble Library (PREFERRED)
+## TFast Library (PREFERRED)
 
-Use the `marble_pptx` helper library. It provides cover slides, section dividers, KPI cards, tables, charts, card grids, stat callouts, two-column layouts, and icon rows — all with automatic theming, backgrounds, and slide numbers.
+Use the `tfast_pptx` helper library. It provides cover slides, section dividers, KPI cards, tables, charts, card grids, stat callouts, two-column layouts, and icon rows — all with automatic theming, backgrounds, and slide numbers.
 
 **IMPORTANT**: Always use the library helpers below. Never manually create backgrounds, slide numbers, helper functions, or color constants — the library handles all of this.
 
 This skill is the **complete API reference** — all palettes, font pairs, and methods are documented below. Use them directly in your code without any exploration calls.
 
 ```python
-from marble_pptx import Deck
+from tfast_pptx import Deck
 
 deck = Deck(palette='ocean', fonts='modern')
 # palette: midnight, forest, coral, terracotta, ocean, charcoal, teal, berry, sage, cherry
@@ -161,7 +161,7 @@ When a slide needs real ad creatives (e.g. top-performer thumbnails from `facebo
 # ]
 
 # In code:
-from marble_pptx import Deck
+from tfast_pptx import Deck
 deck = Deck(palette='ocean')
 s = deck.add_slide(title='Top 3 Performing Creatives')
 s.image(f'{WORKSPACE}/top_ad_1.jpg', left=0.5, top=1.7, width=4)
@@ -189,7 +189,7 @@ Do NOT import `requests`/`urllib` to fetch image URLs from inside your code — 
 ## Example — Multi-layout Deck
 
 ```python
-from marble_pptx import Deck
+from tfast_pptx import Deck
 
 deck = Deck(palette='ocean', fonts='modern')
 
@@ -285,7 +285,7 @@ For edits (fix a slide, change text, move shapes), open the existing file — do
 
 ### Add themed slides to an existing deck (preferred)
 ```python
-from marble_pptx import Deck
+from tfast_pptx import Deck
 
 deck = Deck.open(f'{WORKSPACE}/report.pptx', palette='ocean', fonts='modern')
 deck.cover_slide('Thank You', style='dark')
@@ -344,7 +344,7 @@ del prs.slides._sldIdLst[2]
 
 ### Replace an image on a slide (e.g. regenerate a chart)
 ```python
-from marble_pptx import replace_image
+from tfast_pptx import replace_image
 
 prs = Presentation(f'{WORKSPACE}/report.pptx')
 slide = prs.slides[3]  # slide 4
@@ -361,7 +361,7 @@ result = {"title": "Updated Report", "description": "Fixed slide 3 layout"}
 ### When to edit vs rebuild
 - **Edit**: fix text, reposition shapes, delete a shape, change colors, replace an image — use `Presentation(path)`
 - **Add themed slides**: use `Deck.open(path, palette, fonts)` to append cover, section, or content slides with theming
-- **Rebuild slide**: if the whole slide layout is wrong, delete that slide and add a new one using marble helpers
+- **Rebuild slide**: if the whole slide layout is wrong, delete that slide and add a new one using tfast helpers
 - **Full rebuild**: only if the entire structure needs to change
 
 ## Saving

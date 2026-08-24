@@ -1,19 +1,19 @@
 ---
 name: documents-pdf-skill
-description: "Use when generating PDF documents. Uses the marble_pdf API."
+description: "Use when generating PDF documents. Uses the tfast_pdf API."
 ---
 # PDF Skill: HTML-Based Document Generation
 
-## Marble Library (PREFERRED)
+## TFast Library (PREFERRED)
 
-Use the `marble_pdf` helper library. It builds HTML internally and converts to PDF via WeasyPrint — giving you full CSS styling with a simple Python API.
+Use the `tfast_pdf` helper library. It builds HTML internally and converts to PDF via WeasyPrint — giving you full CSS styling with a simple Python API.
 
 **IMPORTANT**: Always use the library helpers below. Never manually define CSS, color constants, or helper functions — the library handles all of this.
 
 This skill is the **complete API reference** — all palettes, font pairs, and methods are documented below.
 
 ```python
-from marble_pdf import PDF
+from tfast_pdf import PDF
 
 pdf = PDF(f'{WORKSPACE}/report.pdf', palette='ocean', fonts='modern')
 # palette: midnight, forest, coral, terracotta, ocean, charcoal, teal, berry, sage, cherry
@@ -46,7 +46,7 @@ pdf = PDF(f'{WORKSPACE}/report.pdf', palette='ocean', fonts='modern')
 When you need custom layouts beyond the builder API:
 
 ```python
-from marble_pdf import html_to_pdf, theme_css
+from tfast_pdf import html_to_pdf, theme_css
 
 css = theme_css('ocean', fonts='modern')
 html = f"""<html>
@@ -148,7 +148,7 @@ When the PDF needs real images returned by previous tool calls (ad thumbnails fr
 # ]
 
 # In code:
-from marble_pdf import PDF
+from tfast_pdf import PDF
 pdf = PDF(f'{WORKSPACE}/report.pdf', palette='ocean')
 pdf.heading('Top Performers')
 pdf.hr()
@@ -167,13 +167,13 @@ Do NOT import `requests`/`urllib` from inside your code — network is blocked a
 2. **Don't forget `pdf.hr()` after headings** — gives visual structure.
 3. **Don't pass `height` to images** — only `width`. Height auto-scales.
 4. **Don't use raw `\n` for spacing** — use separate `pdf.body()` calls or `pdf.spacer()`.
-5. **NEVER import `pypdf`** — it is NOT available. Use `marble_pdf` only. There is no PDF reading/editing library — regenerate from data instead.
+5. **NEVER import `pypdf`** — it is NOT available. Use `tfast_pdf` only. There is no PDF reading/editing library — regenerate from data instead.
 6. **Respect page count constraints** — if the user asks for "a 2-page report", the final PDF must be ~2 content pages (cover page is extra). Plan layout BEFORE writing code.
 
 ## Example — Professional Report
 
 ```python
-from marble_pdf import PDF
+from tfast_pdf import PDF
 
 pdf = PDF(f'{WORKSPACE}/report.pdf', palette='ocean', fonts='modern')
 
@@ -240,7 +240,7 @@ result = {"title": "B&M Performance Report", "description": "Multi-page PDF with
 `build()` saves an HTML file alongside the PDF (e.g., `report.pdf.html`). To edit, load the HTML, modify it, and re-convert — no need to rewrite the full generation code.
 
 ```python
-from marble_pdf import html_to_pdf
+from tfast_pdf import html_to_pdf
 
 # Load the saved HTML
 with open(f'{WORKSPACE}/report.pdf.html', 'r') as f:

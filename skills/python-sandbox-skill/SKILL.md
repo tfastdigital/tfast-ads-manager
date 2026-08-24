@@ -44,9 +44,9 @@ When a previous tool returned image URLs (e.g. `thumbnail`, `thumbnail_url`, `im
 
 # Then in your code, files exist at:
 # {WORKSPACE}/top_ad_1.jpg, {WORKSPACE}/top_ad_2.png, {WORKSPACE}/top_ad_3.webp
-# Use them directly with marble image helpers — no rename needed.
+# Use them directly with tfast image helpers — no rename needed.
 
-from marble_pptx import Deck
+from tfast_pptx import Deck
 deck = Deck(palette='ocean')
 s = deck.add_slide(title='Top Performers')
 s.image(f'{WORKSPACE}/top_ad_1.jpg', left=0.7, top=1.7, width=4)
