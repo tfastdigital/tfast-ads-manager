@@ -1,0 +1,13 @@
+.env
+.env.local
+*.log
+.DS_Store
+.claude/
+.tfast-data/
+node_modules/
+server/dist/
+output/
+.playwright-cli/
+.impeccable/
+*.local
+TFast Ads Manager — Rebrand & Multi-Client Build Prompt.md

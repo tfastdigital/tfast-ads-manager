@@ -1,0 +1,80 @@
+{
+  "name": "tfast-ads-manager",
+  "version": "0.1.2",
+  "description": "TFast Ads Manager — an AI-powered advertising command center for agencies. It researches markets, understands client businesses, monitors advertising accounts, creates strategies and creatives, recommends optimizations, executes approved advertising actions, and continuously learns from campaign and business results. Built for TFast Digital Agency. 68 expert-authored AI ads playbooks, 11 morning-workflow slash commands.",
+  "type": "module",
+  "bin": {
+    "tfast-ads-manager": "bin/install.mjs"
+  },
+  "files": [
+    "assets/",
+    "bin/",
+    ".claude-plugin/",
+    ".codex-plugin/",
+    ".mcp.json",
+    "commands/",
+    "hooks/",
+    "skills/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "ai-ads",
+    "ai-ads-tool",
+    "ai-marketing",
+    "ai-marketing-agent",
+    "ai-advertising",
+    "ad-agent",
+    "ads-agent",
+    "marketing-agent",
+    "marketing",
+    "advertising",
+    "ads",
+    "paid-media",
+    "performance-marketing",
+    "growth-marketing",
+    "media-buying",
+    "ads-automation",
+    "marketing-automation",
+    "ad-optimization",
+    "campaign-management",
+    "creative-analytics",
+    "claude-code",
+    "claude-code-plugin",
+    "claude-plugin",
+    "codex",
+    "codex-plugin",
+    "mcp",
+    "mcp-server",
+    "google-ads",
+    "meta-ads",
+    "facebook-ads",
+    "instagram-ads",
+    "tiktok-ads",
+    "linkedin-ads",
+    "bing-ads",
+    "ga4",
+    "shopify",
+    "klaviyo",
+    "search-console",
+    "seo",
+    "tfast-ads-manager",
+    "agency-platform"
+  ],
+  "author": {
+    "name": "TFast Digital Agency",
+    "url": "https://tfastdigital.com/"
+  },
+  "homepage": "https://tfastdigital.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfastdigital/tfast-ads-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tfastdigital/tfast-ads-manager/issues"
+  },
+  "license": "MIT"
+}

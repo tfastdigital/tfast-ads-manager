@@ -1,0 +1,23 @@
+# Local PostgreSQL + pgvector for TFast Ads Manager.
+# One command: docker compose up -d
+# Matches DATABASE_URL=postgresql://postgres:postgres@localhost:5432/tfast
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: tfast-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tfast
+    ports:
+      - "5432:5432"
+    volumes:
+      - tfast_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tfast"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  tfast_pgdata:
