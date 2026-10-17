@@ -1,0 +1,30 @@
+name: Node package validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate package manifest
+        run: node -e "const p=require('./package.json'); if(!p.name || !p.version || !p.license) process.exit(1); console.log(p.name, p.version)"
+      - name: Check distributable package
+        run: npm pack --dry-run --json > package-audit.json
+      - name: Verify package output
+        run: node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package-audit.json','utf8'));if(!p[0] || !p[0].files || !p[0].files.length)process.exit(1)"
